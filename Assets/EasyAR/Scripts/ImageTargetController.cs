@@ -204,6 +204,11 @@ public class ImageTargetController : MonoBehaviour
         {
             transform.GetChild(i).gameObject.SetActive(false);
         }
+
+        if (gameObject.GetComponent<Ion>())
+        {
+            gameObject.GetComponent<Ion>().RemoveIon();
+        }
     }
 
     public void OnFound()
@@ -213,6 +218,11 @@ public class ImageTargetController : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).gameObject.SetActive(true);
+        }
+
+        if (gameObject.GetComponent<Ion>())
+        {
+            gameObject.GetComponent<Ion>().AddIon();
         }
     }
 

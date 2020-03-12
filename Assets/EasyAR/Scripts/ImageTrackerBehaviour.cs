@@ -27,6 +27,11 @@ namespace easyar
         private ImageTracker tracker = null;
         private Matrix4x4 centerTransform = Matrix4x4.identity;
 
+        public List<ImageTargetController> GetTargetControllers()
+        {
+            return targetControllers;
+        }
+
         void Awake()
         {
             if(!ImageTracker.isAvailable())
