@@ -9,8 +9,16 @@ public class SolutionManager : MonoBehaviour
     List<SolutionMatrix.Cation> trackedCations = new List<SolutionMatrix.Cation>();
     List<Connection> compounds = new List<Connection>();
 
+    List<GameObject> lines = new List<GameObject>();
+
+    int COMPOUND_THRESH = -1;
+
     public easyar.ImageTrackerBehaviour imageTracker;
     public Text textUI;
+
+    public Material solubleMat;
+    public Material insolubleMat;
+    public Material specialMat;
 
     struct Connection
     {
@@ -69,6 +77,24 @@ public class SolutionManager : MonoBehaviour
         { IonType.Aluminum, SolutionMatrix.cations[13] }
     };
 
+    readonly Dictionary<SolutionMatrix.Cation, IonType> catDictReverse = new Dictionary<SolutionMatrix.Cation, IonType>()
+    {
+        { SolutionMatrix.cations[0], IonType.Ammonium },
+        { SolutionMatrix.cations[1], IonType.Sodium },
+        { SolutionMatrix.cations[2], IonType.Potassium },
+        { SolutionMatrix.cations[3], IonType.Lithium },
+        { SolutionMatrix.cations[4], IonType.Magnesium },
+        { SolutionMatrix.cations[5], IonType.Calcium },
+        { SolutionMatrix.cations[6], IonType.Strontium },
+        { SolutionMatrix.cations[7], IonType.Barium },
+        { SolutionMatrix.cations[8], IonType.IronIII },
+        { SolutionMatrix.cations[9], IonType.CopperII },
+        { SolutionMatrix.cations[10], IonType.Silver },
+        { SolutionMatrix.cations[11], IonType.Zinc },
+        { SolutionMatrix.cations[12], IonType.LeadII },
+        { SolutionMatrix.cations[13], IonType.Aluminum }
+    };
+
 
     readonly Dictionary<IonType, SolutionMatrix.Anion> anDict = new Dictionary<IonType, SolutionMatrix.Anion>()
     {
@@ -83,6 +109,21 @@ public class SolutionManager : MonoBehaviour
         { IonType.Chromate, SolutionMatrix.anions[8] },
         { IonType.Hydroxide, SolutionMatrix.anions[9] },
         { IonType.Phosphate, SolutionMatrix.anions[10] }
+    };
+
+    readonly Dictionary<SolutionMatrix.Anion, IonType> anDictReverse = new Dictionary<SolutionMatrix.Anion, IonType>()
+    {
+        { SolutionMatrix.anions[0], IonType.Nitrate },
+        { SolutionMatrix.anions[1], IonType.Acetate },
+        { SolutionMatrix.anions[2], IonType.Chlorate },
+        { SolutionMatrix.anions[3], IonType.Chloride },
+        { SolutionMatrix.anions[4], IonType.Bromide },
+        { SolutionMatrix.anions[5], IonType.Iodide },
+        { SolutionMatrix.anions[6], IonType.Sulfate },
+        { SolutionMatrix.anions[7], IonType.Carbonate },
+        { SolutionMatrix.anions[8], IonType.Chromate },
+        { SolutionMatrix.anions[9], IonType.Hydroxide },
+        { SolutionMatrix.anions[10], IonType.Phosphate }
     };
 
     Dictionary<SolutionMatrix.Anion, Vector3> anPos = new Dictionary<SolutionMatrix.Anion, Vector3>();
@@ -119,7 +160,7 @@ public class SolutionManager : MonoBehaviour
     {
         foreach (SolutionMatrix.Anion an in trackedAnions)
         {
-            if (cat.compounds[an.index] > 0)
+            if (cat.compounds[an.index] > COMPOUND_THRESH)
             {
                 Vector3 anionPos;
                 anPos.TryGetValue(an, out anionPos);
@@ -131,6 +172,35 @@ public class SolutionManager : MonoBehaviour
                 if (!compounds.Contains(conn))
                 {
                     compounds.Add(conn);
+
+                    GameObject obj = new GameObject();
+                    LineRenderer rend = obj.AddComponent<LineRenderer>();
+                    rend.positionCount = 2;
+                    rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+
+                    if (conn.type == 0)
+                    {
+                        rend.material = solubleMat;
+                    }
+                    else if (conn.type == 1)
+                    {
+                        rend.material = insolubleMat;
+                    }
+                    else if (conn.type == 2)
+                    {
+                        rend.material = specialMat;
+                    }
+
+                    DrawLine draw = obj.AddComponent<DrawLine>();
+                    //draw.solubleMat = solubleMat;
+                    //draw.insolubleMat = insolubleMat;
+                    //draw.specialMat = specialMat;
+                    draw.origin = conn.start;
+                    draw.destination = conn.end;
+                    //draw.SetType(conn.type);
+                    catDictReverse.TryGetValue(cat, out draw.originIon);
+                    anDictReverse.TryGetValue(an, out draw.destIon);
+                    lines.Add(obj);
                 }
 
                 Debug.Log("CONNECTION POSITION IS " + conn.start + " TO " + conn.end);
@@ -142,7 +212,7 @@ public class SolutionManager : MonoBehaviour
     {
         foreach (SolutionMatrix.Cation cat in trackedCations)
         {
-            if (an.compounds[cat.index] > 0)
+            if (an.compounds[cat.index] > COMPOUND_THRESH)
             {
                 Vector3 anionPos;
                 anPos.TryGetValue(an, out anionPos);
@@ -154,13 +224,98 @@ public class SolutionManager : MonoBehaviour
                 if (!compounds.Contains(conn))
                 {
                     compounds.Add(conn);
+
+                    GameObject obj = new GameObject();
+                    LineRenderer rend = obj.AddComponent<LineRenderer>();
+                    rend.positionCount = 2;
+                    rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+
+                    if (conn.type == 0)
+                    {
+                        rend.material = solubleMat;
+                    }
+                    else if (conn.type == 1)
+                    {
+                        rend.material = insolubleMat;
+                    }
+                    else if (conn.type == 2)
+                    {
+                        rend.material = specialMat;
+                    }
+
+                    DrawLine draw = obj.AddComponent<DrawLine>();
+                    //draw.solubleMat = solubleMat;
+                    //draw.insolubleMat = insolubleMat;
+                    //draw.specialMat = specialMat;
+                    draw.origin = conn.start;
+                    draw.destination = conn.end;
+                    //draw.SetType(conn.type);
+                    catDictReverse.TryGetValue(cat, out draw.originIon);
+                    anDictReverse.TryGetValue(an, out draw.destIon);
+                    lines.Add(obj);
                 }
 
                 Debug.Log("CONNECTION POSITION IS " + conn.start + " TO " + conn.end);
             }
         }
     }
-    
+
+    public void UpdateIon(IonType ion, Vector3 position)
+    {
+        SolutionMatrix.Anion an;
+        SolutionMatrix.Cation cat;
+
+        if (anDict.TryGetValue(ion, out an))
+        {
+            if (trackedAnions.Contains(an))
+            {
+                anPos[an] = position;
+                Debug.Log("ANION " + an.name + " POSITION IS " + position);
+            }
+        }
+        else if (catDict.TryGetValue(ion, out cat))
+        {
+            if (trackedCations.Contains(cat))
+            {
+                catPos[cat] = position;
+                Debug.Log("CATION " + cat.name + " POSITION IS " + position);
+                UpdateConnection(cat);
+            }
+        }
+    }
+
+    private void UpdateConnection(SolutionMatrix.Cation cat)
+    {
+        foreach (Connection conn in compounds.ToArray())
+        {
+            if (conn.cation.Equals(cat))
+            {
+                Vector3 anionPos;
+                anPos.TryGetValue(conn.anion, out anionPos);
+
+                Vector3 cationPos;
+                catPos.TryGetValue(conn.cation, out cationPos);
+
+                Connection conn2 = new Connection() { cation = conn.cation, anion = conn.anion, start = cationPos, end = anionPos, type = conn.type };
+
+                compounds.Remove(conn);
+                compounds.Insert(0, conn2);
+
+                for(int i = 0; i < lines.Count; i++)
+                {
+                    catDict.TryGetValue(lines[i].GetComponent<DrawLine>().originIon, out SolutionMatrix.Cation c);
+                    anDict.TryGetValue(lines[i].GetComponent<DrawLine>().destIon, out SolutionMatrix.Anion a);
+
+                    if (c.Equals(conn2.cation) && a.Equals(conn2.anion))
+                    {
+                        lines[i].GetComponent<DrawLine>().origin = conn2.start;
+                        lines[i].GetComponent<DrawLine>().destination = conn2.end;
+                    }
+                }
+
+            }
+        }
+    }
 
 
 
@@ -196,6 +351,17 @@ public class SolutionManager : MonoBehaviour
             if (conn.cation.Equals(cat))
             {
                 compounds.Remove(conn);
+
+                for (int i = 0; i < lines.Count; i++)
+                {
+                    catDict.TryGetValue(lines[i].GetComponent<DrawLine>().originIon, out SolutionMatrix.Cation c);
+
+                    if (c.Equals(cat))
+                    {
+                        Destroy(lines[i]);
+                        lines.Remove(lines[i]);
+                    }
+                }
             }
         }
     }
@@ -207,6 +373,17 @@ public class SolutionManager : MonoBehaviour
             if (conn.anion.Equals(an))
             {
                 compounds.Remove(conn);
+
+                for (int i = 0; i < lines.Count; i++)
+                {
+                    anDict.TryGetValue(lines[i].GetComponent<DrawLine>().destIon, out SolutionMatrix.Anion a);
+
+                    if (a.Equals(an))
+                    {
+                        Destroy(lines[i]);
+                        lines.Remove(lines[i]);
+                    }
+                }
             }
         }
     }
@@ -215,32 +392,11 @@ public class SolutionManager : MonoBehaviour
     private void Update()
     {
         textUI.text = "";
+
         foreach (Connection conn in compounds)
         {
-            //LineRenderer line = gameObject.GetComponent<LineRenderer>();
-            //Vector3[] vec = new Vector3[] { conn.start, conn.end };
-            //line.SetPositions(vec);
-            //Debug.DrawLine(conn.start, conn.end, Color.green);
             textUI.text += conn.cation.name + " " + conn.anion.name + ",  ";
         }
     }
 
-
-    void UpdateConnections()
-    {
-        foreach (SolutionMatrix.Anion an in trackedAnions)
-        {
-            foreach (SolutionMatrix.Cation cat in trackedCations)
-            {
-                if (an.compounds[cat.index] > 0)
-                {
-                    Connection conn = new Connection() { cation = cat, anion = an, start = Vector3.zero, end = Vector3.zero, type = an.compounds[cat.index] };
-                    if (!compounds.Contains(conn))
-                    {
-                        compounds.Add(conn);
-                    }
-                }
-            }
-        }
-    }
 }

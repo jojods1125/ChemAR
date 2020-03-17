@@ -15,6 +15,12 @@ public class Ion : MonoBehaviour
     }
 
     // Called in ImageTargetController
+    public void UpdateIon()
+    {
+        manager.UpdateIon(ion, gameObject.transform.position);
+    }
+
+    // Called in ImageTargetController
     public void RemoveIon()
     {
         manager.RemoveIon(ion);

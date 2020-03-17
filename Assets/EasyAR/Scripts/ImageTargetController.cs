@@ -184,7 +184,7 @@ public class ImageTargetController : MonoBehaviour
 
     public void OnTracking(Matrix4x4 pose)
     {
-        Debug.Log("[EasyAR] OnTracking targtet name: " + target.name());
+        Debug.Log("[EasyAR] OnTracking targtet name: " + target.name() + " LOCATION: " + gameObject.transform.position);
         Utility.SetMatrixOnTransform(transform, pose);
         if (xFlip)
         {
@@ -194,6 +194,11 @@ public class ImageTargetController : MonoBehaviour
         }
 
         transform.localScale = transform.localScale * TargetSize;
+
+        if (gameObject.GetComponent<Ion>())
+        {
+            gameObject.GetComponent<Ion>().UpdateIon();
+        }
     }
 
     public void OnLost()
