@@ -3759,13 +3759,15 @@ GameObject:
   - component: {fileID: 1161015813}
   - component: {fileID: 1161015812}
   - component: {fileID: 1161015811}
+  - component: {fileID: 1161015815}
+  - component: {fileID: 1161015814}
   m_Layer: 0
   m_Name: LineRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1161015811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3783,9 +3785,6 @@ MonoBehaviour:
   lineDrawSpeed: 6
   originIon: 0
   destIon: 0
-  solubleMat: {fileID: 0}
-  insolubleMat: {fileID: 0}
-  specialMat: {fileID: 0}
 --- !u!120 &1161015812
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -3891,11 +3890,71 @@ Transform:
   m_GameObject: {fileID: 1161015810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!102 &1161015814
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161015810}
+  m_Text: Sodium Phosphate
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1
+  m_Anchor: 4
+  m_Alignment: 1
+  m_TabSize: 4
+  m_FontSize: 0
+  m_FontStyle: 1
+  m_RichText: 1
+  m_Font: {fileID: 0}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+--- !u!23 &1161015815
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161015810}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &1182156267
 GameObject:
   m_ObjectHideFlags: 0
@@ -4566,7 +4625,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1378469303}
   - component: {fileID: 1378469302}
-  - component: {fileID: 1378469304}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -4586,6 +4644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d0f2d7b0886d2445b37c50fa42ab073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  COMPOUND_THRESH: 0
   imageTracker: {fileID: 1355920162}
   textUI: {fileID: 542961019}
   solubleMat: {fileID: 2100000, guid: b9bea3778c7964d42bab81a024f99ed5, type: 2}
@@ -4605,19 +4664,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1378469304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1378469301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9945740abd5309b4f8ef95354c8aedd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lineCount: 0
 --- !u!1 &1399655576
 GameObject:
   m_ObjectHideFlags: 0

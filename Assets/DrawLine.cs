@@ -5,6 +5,7 @@ using UnityEngine;
 public class DrawLine : MonoBehaviour
 {
     private LineRenderer lineRenderer;
+    private TextMesh textMesh;
     private float counter;
     private float dist;
 
@@ -18,10 +19,6 @@ public class DrawLine : MonoBehaviour
     [HideInInspector]
     public SolutionManager.IonType destIon;
 
-    public Material solubleMat;
-    public Material insolubleMat;
-    public Material specialMat;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +26,13 @@ public class DrawLine : MonoBehaviour
         lineRenderer.SetPosition(0, origin);
         lineRenderer.startWidth = .1f;
         lineRenderer.endWidth = .1f;
+
+        textMesh = GetComponent<TextMesh>();
+        textMesh.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        textMesh.anchor = TextAnchor.MiddleCenter;
+        textMesh.alignment = TextAlignment.Center;
+        textMesh.fontStyle = FontStyle.Bold;
+        textMesh.color = Color.black;
     }
 
     // Update is called once per frame
@@ -37,6 +41,8 @@ public class DrawLine : MonoBehaviour
         if (!origin.Equals(null) && !destination.Equals(null))
         {
             dist = Vector3.Distance(origin, destination);
+
+            CreateText();
 
             if (counter < dist)
             {
@@ -66,19 +72,11 @@ public class DrawLine : MonoBehaviour
         }
     }
 
-    public void SetType(int type)
+    public void CreateText()
     {
-        //if (type == 0)
-        //{
-        //    lineRenderer.material = solubleMat;
-        //}
-        //else if (type == 1)
-        //{
-        //    lineRenderer.
-        //}
-        //else if (type == 2)
-        //{
-        //    lineRenderer.material = specialMat;
-        //}
+        //Debug.Log(originIon.ToString() + " " + destIon.ToString());
+
+        textMesh.transform.position = (destination + origin) / 2;
+        textMesh.transform.LookAt(((destination + origin) / 2) + new Vector3(0,0,1));
     }
 }

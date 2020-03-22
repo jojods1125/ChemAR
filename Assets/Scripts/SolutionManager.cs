@@ -11,7 +11,7 @@ public class SolutionManager : MonoBehaviour
 
     List<GameObject> lines = new List<GameObject>();
 
-    int COMPOUND_THRESH = -1;
+    public int COMPOUND_THRESH = -1;
 
     public easyar.ImageTrackerBehaviour imageTracker;
     public Text textUI;
@@ -140,7 +140,7 @@ public class SolutionManager : MonoBehaviour
             {
                 trackedAnions.Add(an);
                 anPos.Add(an, position);
-                Debug.Log("ANION " + an.name + " POSITION IS " + position);
+                //Debug.Log("ANION " + an.name + " POSITION IS " + position);
                 AddConnection(an);
             }
         } 
@@ -150,7 +150,7 @@ public class SolutionManager : MonoBehaviour
             {
                 trackedCations.Add(cat);
                 catPos.Add(cat, position);
-                Debug.Log("CATION " + cat.name + " POSITION IS " + position);
+                //Debug.Log("CATION " + cat.name + " POSITION IS " + position);
                 AddConnection(cat);
             }
         }
@@ -178,6 +178,9 @@ public class SolutionManager : MonoBehaviour
                     rend.positionCount = 2;
                     rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
+                    TextMesh textMesh = obj.AddComponent<TextMesh>();
+                    textMesh.text = cat.name + " " + an.name + "\n" + (cat.aqueousPts + an.aqueousPts) + " points" ;
+
                     if (conn.type == 0)
                     {
                         rend.material = solubleMat;
@@ -203,7 +206,7 @@ public class SolutionManager : MonoBehaviour
                     lines.Add(obj);
                 }
 
-                Debug.Log("CONNECTION POSITION IS " + conn.start + " TO " + conn.end);
+                //Debug.Log("CONNECTION POSITION IS " + conn.start + " TO " + conn.end);
             }
         }
     }
@@ -230,6 +233,9 @@ public class SolutionManager : MonoBehaviour
                     rend.positionCount = 2;
                     rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
+                    TextMesh textMesh = obj.AddComponent<TextMesh>();
+                    textMesh.text = cat.name + " " + an.name + "\n" + (cat.aqueousPts + an.aqueousPts) + " points";
+
                     if (conn.type == 0)
                     {
                         rend.material = solubleMat;
@@ -255,7 +261,7 @@ public class SolutionManager : MonoBehaviour
                     lines.Add(obj);
                 }
 
-                Debug.Log("CONNECTION POSITION IS " + conn.start + " TO " + conn.end);
+                //Debug.Log("CONNECTION POSITION IS " + conn.start + " TO " + conn.end);
             }
         }
     }
@@ -270,7 +276,7 @@ public class SolutionManager : MonoBehaviour
             if (trackedAnions.Contains(an))
             {
                 anPos[an] = position;
-                Debug.Log("ANION " + an.name + " POSITION IS " + position);
+                //Debug.Log("ANION " + an.name + " POSITION IS " + position);
             }
         }
         else if (catDict.TryGetValue(ion, out cat))
@@ -278,7 +284,7 @@ public class SolutionManager : MonoBehaviour
             if (trackedCations.Contains(cat))
             {
                 catPos[cat] = position;
-                Debug.Log("CATION " + cat.name + " POSITION IS " + position);
+                //Debug.Log("CATION " + cat.name + " POSITION IS " + position);
                 UpdateConnection(cat);
             }
         }
