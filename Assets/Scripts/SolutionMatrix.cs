@@ -2,23 +2,74 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Readable data for all ions and compounds
+/// Author: Joseph Dasilva
+/// </summary>
 static class SolutionMatrix
 {
+    /// <summary>
+    /// Cation ions, known for having a positive charge
+    /// </summary>
     public struct Cation
     {
+        /// <summary>
+        /// Name of Cation
+        /// </summary>
         public string name;
+
+        /// <summary>
+        /// Index the Cation appears at in the list of compounds in Anions
+        /// </summary>
         public int index;
+
+        /// <summary>
+        /// Array of ints referring to the Anions that form compounds with this Cation,
+        /// <br> where 0 means soluble, 1 means insoluble, and 2 means exception </br>
+        /// </summary>
         public int[] compounds;
+
+        /// <summary>
+        /// Number of points the ion is worth while in the solution
+        /// </summary>
         public int aqueousPts;
+
+        /// <summary>
+        /// Number of points the ion is worth as a precipitate
+        /// </summary>
         public int precipitatePts;
     }
 
+
+    /// <summary>
+    /// Anion ions, known for having a negative charge
+    /// </summary>
     public struct Anion
     {
+        /// <summary>
+        /// Name of Anion
+        /// </summary>
         public string name;
+
+        /// <summary>
+        /// Index the Anion appears at in the list of compounds in Cations
+        /// </summary>
         public int index;
+
+        /// <summary>
+        /// Array of ints referring to the Cations that form compounds with this Anion,
+        /// <br> where 0 means soluble, 1 means insoluble, and 2 means exception </br>
+        /// </summary>
         public int[] compounds;
+
+        /// <summary>
+        /// Number of points the ion is worth while in the solution
+        /// </summary>
         public int aqueousPts;
+
+        /// <summary>
+        /// Number of points the ion is worth as a precipitate
+        /// </summary>
         public int precipitatePts;
     }
 
@@ -252,8 +303,14 @@ static class SolutionMatrix
         precipitatePts = 2
     };
 
+    /// <summary>
+    /// Appropriately ordered list of Cations
+    /// </summary>
     public static Cation[] cations = new Cation[14] { Ammonium, Sodium, Potassium, Lithium, Magnesium, Calcium, Strontium, Barium, IronIII, CopperII, Silver, Zinc, LeadII, Aluminum };
 
+    /// <summary>
+    /// Appropriately ordered list of Anions
+    /// </summary>
     public static Anion[] anions = new Anion[11] { Nitrate, Acetate, Chlorate, Chloride, Bromide, Iodide, Sulfate, Carbonate, Chromate, Hydroxide, Phosphate };
 
 }

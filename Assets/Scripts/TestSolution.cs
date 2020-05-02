@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Test script for testing soluble/insoluble/exception functionality
 public class TestSolution : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -13,6 +14,7 @@ public class TestSolution : MonoBehaviour
         SolutionMatrix.Cation cation = (SolutionMatrix.Cation)SolutionMatrix.cations.GetValue(cat);
         SolutionMatrix.Anion anion = (SolutionMatrix.Anion)SolutionMatrix.anions.GetValue(an);
 
+        // Prints if a specific compound is soluble, insoluble, or exception
         if ((int)cation.compounds.GetValue(an) == 0)
         {
             Debug.Log("SOLUBLE - " + cation.name + " " + anion.name);

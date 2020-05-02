@@ -13,8 +13,11 @@ EditorBuildSettings:
     guid: 34715c34b4f21a54785fb54849ddba6c
   - enabled: 1
     path: Assets/Scenes/Info.unity
-    guid: 72a6c41d85f153f4b8352582158f6771
+    guid: 0a188692bbb5e9744851163c7668fdeb
   - enabled: 1
     path: Assets/Scenes/Lab.unity
     guid: b8de7f157da8dfc408ce8d2d5927986b
+  - enabled: 0
+    path: Assets/Samples/Scenes/HelloAR_SurfaceTracking.unity
+    guid: 29d9671db051e914eabc94c5ff47ece2
   m_configObjects: {}
